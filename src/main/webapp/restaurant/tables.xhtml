@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core">
+<style>
+    table, th, tr{
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    tr:first-child{
+        background-color: #00926B;
+        color: aliceblue;
+    }
+    h2, h1{
+        text-align: center;
+    }
+    input[type=submit]{
+        background-color: limegreen;
+        color:white;
+    }
+
+</style>
+<h:head/>
+<h:body>
+    <h2>Restaurant:</h2>
+    <h2>#{tables.restaurant.name}</h2>
+    <h2>Tables list:</h2>
+    <table style="width:100%;">
+        <tr>
+            <th>Description</th>
+            <th>Capacity</th>
+            <th>Edit customers</th>
+        </tr>
+        <ui:repeat value="#{tables.restaurant.tables}" var="table">
+            <tr>
+                <th>#{table.description}</th>
+                <th>#{table.capacity}</th>
+                <th>
+                    <h:link outcome="customers?tableEntityId=#{table.id}">
+                        <input type="submit" value="Edit customers" />
+                    </h:link>
+                </th>
+            </tr>
+        </ui:repeat>
+    </table>
+    <h3>Add Table:</h3>
+    <h:form>
+        <h:inputText a:placeholder="capacity" value="#{tables.tableEntityToCreate.capacity}" required="true" />
+        <h:outputText value="&lt;br/&gt;" escape="false" />
+        <h:outputText value="&lt;br/&gt;" escape="false" />
+        <h:inputText a:placeholder="description" value="#{tables.tableEntityToCreate.description}" required="true" />
+        <h:outputText value="&lt;br/&gt;" escape="false" />
+        <h:outputText value="&lt;br/&gt;" escape="false" />
+        <h:commandButton value="Add table" action="#{tables.createTableEntity}" >
+            <f:param name="restaurantId" value="#{tables.restaurant.id}" />
+        </h:commandButton>
+    </h:form>
+    <h:link outcome="restaurants" value="Back to restaurants page"/>
+</h:body>
+</html>

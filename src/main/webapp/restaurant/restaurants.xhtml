@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core">
+<style>
+    table, th, tr{
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    tr:first-child{
+        background-color: #00926B;
+        color: aliceblue;
+    }
+    h2, h1{
+        text-align: center;
+    }
+    input[type=submit]{
+        background-color: limegreen;
+        color:white;
+    }
+    input[value="Delete restaurant"]{
+        background-color: darkred;
+        color:white;
+    }
+</style>
+<h:head/>
+<h:body>
+    <h2>Restaurants list:</h2>
+    <table style="width:100%;">
+        <tr>
+            <th>Restaurant number</th>
+            <th>Restaurant Name</th>
+            <th>Restaurant tables number</th>
+            <th>Edit tables</th>
+            <th>Delete restaurant</th>
+        </tr>
+        <ui:repeat value="#{restaurants.allRestaurants}" var="restaurant" varStatus="restaurantStatus">
+            <tr>
+                <th>#{restaurant.id}</th>
+                <th>#{restaurant.name}</th>
+                <th>#{restaurants.restaurantsTableNumbers[restaurantStatus.index]}</th>
+                <th>
+                    <h:link outcome="tables?restaurantId=#{restaurant.id}">
+                        <input type="submit" value="Edit tables" />
+                    </h:link>
+                </th>
+                <th>
+                    <h:form>
+                        <h:commandButton value="Delete restaurant" action="#{restaurants.deleteRestaurant(restaurant.id)}" />
+                    </h:form>
+                </th>
+            </tr>
+        </ui:repeat>
+    </table>
+    <h:form>
+        <h:inputText a:placeholder="name" value="#{restaurants.restaurantToCreate.name}" required="true" />
+        <h:commandButton value="Add restaurant" action="#{restaurants.createRestaurant}" >
+        </h:commandButton>
+    </h:form>
+</h:body>
+</html>

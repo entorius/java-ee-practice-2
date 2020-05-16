@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<style>
+    table, th, tr{
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    tr:first-child{
+        background-color: #00926B;
+        color: aliceblue;
+    }
+    h2, h1{
+        text-align: center;
+    }
+    input[type=submit]{
+        background-color: limegreen;
+        color:white;
+    }
+
+</style>
+
+<h:head/>
+<h:body>
+    <h1> Table</h1>
+    <h2> #{customers.tableEntity.description} capaacity: #{customers.tableEntity.capacity}</h2>
+    <h2>Regitered Participants List</h2>
+    <table style="width:100%;">
+        <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Reservation time</th>
+        </tr>
+        <ui:repeat value="#{customers.tableEntity.customers}" var="c">
+            <tr>
+                <th>#{c.name}</th>
+                <th>#{c.surname}</th>
+                <th>#{c.reservationTime}</th>
+            </tr>
+        </ui:repeat>
+    </table>
+    <h3>Choose from customers list customer to add:</h3>
+    <h:form>
+        <h:selectOneMenu value="#{customers.selectedCustomerId}">
+            <f:selectItems value="#{customers.allCustomers}" var="c"
+                           itemLabel="#{c.name} #{c.surname}" itemValue="#{c.id}"/>
+        </h:selectOneMenu>
+        <h:outputText value="&lt;br/&gt;" escape="false" />
+        <h:commandButton value="Add Customer From list" action="#{customers.editCustomer}">
+            <f:param name="tableEntityId" value="#{customers.tableEntity.id}" />
+        </h:commandButton>
+    </h:form>
+    <h:outputText value="&lt;br/&gt;" escape="false" />
+    <h3>Create new customer</h3>
+    <h:form>
+        <h:inputText a:placeholder="name" value="#{customers.customerToCreate.name}" required="true"/>
+        <h:outputText value="&lt;br/&gt;" escape="false" />
+        <h:inputText a:placeholder="surname" value="#{customers.customerToCreate.surname}" required="true"/>
+        <h:outputText value="&lt;br/&gt;" escape="false" />
+        <p:calendar value="#{customers.customerDate}" required="true"/>
+        <h:outputText value="&lt;br/&gt;" escape="false" />
+        <h:commandButton value="Add customer" action="#{customers.createCustomer}">
+            <f:param name="tableEntityId" value="#{customers.tableEntity.id}" />
+        </h:commandButton>
+    </h:form>
+    <h:link outcome="tables?restaurantId=#{customers.tableEntity.restaurant.id}" value="Back to tables page"/>
+</h:body>
+</html>
