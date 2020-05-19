@@ -1,6 +1,7 @@
 package lt.vu.configurations;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -9,11 +10,12 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.ApplicationPath;
 import java.util.concurrent.Executor;
 
-@ApplicationScoped
 @Configuration
+@ComponentScan("lt.vu")
+@ComponentScan("lt.vu.usecases")
 @EnableAsync
 public class AsyncConfig  {
-    @Bean(name = "threadPoolTaskExecutor")
+    /*@Bean(name = "threadPoolTaskExecutor")
     public Executor threadPoolTaskExecutor() {
         ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
         threadPoolTaskExecutor.setThreadNamePrefix("Async-");
@@ -22,6 +24,6 @@ public class AsyncConfig  {
         threadPoolTaskExecutor.setQueueCapacity(600);
         threadPoolTaskExecutor.afterPropertiesSet();
         return threadPoolTaskExecutor;
-    }
+    }*/
 
 }

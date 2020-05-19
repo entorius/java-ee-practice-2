@@ -3,6 +3,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lt.vu.entities.Restaurant;
 import lt.vu.persistence.RestaurantDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 
@@ -23,9 +24,6 @@ public class EditRestaurantName {
     @Getter
     @Setter
     private Restaurant selectedRestaurant;
-    @Getter
-    @Setter
-    private RestaurantAsyncMethods asyncMethods = new RestaurantAsyncMethods();
     @Getter
     @Setter
     private String selectedRestaurantNameUpdate;
@@ -69,11 +67,6 @@ public class EditRestaurantName {
             return "editRestaurantName?faces-redirect=true&restaurantId=" + restaurantToUpdate.getId() + "&error=interrupted-exception";
         }
         return "editRestaurantName?faces-redirect=true&restaurantId=" + restaurantToUpdate.getId();
-    }
-    public String getAsyncSayLongHello(Restaurant res) {
-        this.Counter = this.Counter + 1;
-        return asyncMethods.getAsyncSayLongHello(res);
-
     }
     private void loadAllRestaurants(){
         this.allRestaurants = restaurantsDAO.loadAll();

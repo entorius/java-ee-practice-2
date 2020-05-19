@@ -4,6 +4,7 @@ import lt.vu.entities.Restaurant;
 import lt.vu.persistence.RestaurantDAO;
 import lt.vu.persistence.Restful.Model.RestaurantBusinessLogic;
 import lt.vu.persistence.Restful.Model.RestaurantModel;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
