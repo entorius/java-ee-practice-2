@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Future;
 
+import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
+
 @Model
 public class EditRestaurantName {
     @Inject
@@ -55,7 +57,7 @@ public class EditRestaurantName {
         }
 
     }
-    @Transactional
+    @Transactional//(REQUIRES_NEW)
     public String editRestaurantName(){
         Restaurant restaurantToUpdate = restaurantsDAO.findOne(selectedRestaurant.getId());
         try {

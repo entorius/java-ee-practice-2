@@ -40,13 +40,6 @@
         </h:commandButton>
 
     </h:form>
-    <h:form>
-        <h:commandButton value="async action" >
-            <f:ajax execute="name" render="output" />
-        </h:commandButton>
-        <h:outputText id="output" value="#{editRestaurantName.getAsyncSayLongHello(editRestaurantName.selectedRestaurant)}" />
-    </h:form>
-
 
     <h:link outcome="restaurants" value="Back to restaurants page"/>
 </h:body>
