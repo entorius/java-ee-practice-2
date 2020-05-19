@@ -12,6 +12,7 @@ public class RestaurantDAO {
     @Inject
     private EntityManager em;
 
+
     public List<Restaurant> loadAll() {
         return em.createNamedQuery("Restaurant.findAll", Restaurant.class).getResultList();
     }
@@ -26,6 +27,21 @@ public class RestaurantDAO {
 
     public Restaurant update(Restaurant restaurant){
         return em.merge(restaurant);
+    }
+
+    public Restaurant updateRestaurantName(Restaurant restaurant,String newName) throws InterruptedException {
+        Restaurant foundRestaurant = this.findOne(restaurant.getId());
+        foundRestaurant.setName(newName);
+        System.out.println("Lock Mode for update 2: " + foundRestaurant.getVersion());
+        System.out.println("Lock Mode for update 2: " + em.getLockMode(foundRestaurant));
+        try {
+            Thread.sleep(5000);
+        } catch (java.lang.InterruptedException e){
+            System.out.println("java interrupt exception");
+        }
+        em.flush();
+
+        return foundRestaurant;
     }
 
     public void deleteById(Integer id) {

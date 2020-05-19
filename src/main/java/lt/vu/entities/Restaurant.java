@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -16,7 +17,8 @@ import java.util.Objects;
 @Table(name="RESTAURANT")
 @Getter
 @Setter
-public class Restaurant {
+
+public class Restaurant implements Serializable {
 
     public Restaurant() {
     }
@@ -28,6 +30,9 @@ public class Restaurant {
     @Size(max = 50)
     @Column(name = "NAME")
     private String name;
+    @Version
+    @Column(name = "VERSION")
+    private Integer version;
 
     @OneToMany(mappedBy = "restaurant", cascade=CascadeType.ALL, orphanRemoval=true)
     private List<TableEntity> tables = new ArrayList<>();

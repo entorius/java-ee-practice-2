@@ -30,6 +30,8 @@ public class TableEntity {
     @Column(name = "DESCRIPTION")
     private String description;
 
+
+
     @ManyToOne
     @JoinColumn(name="RESTAURANT_ID")
     private Restaurant restaurant;

@@ -2,15 +2,11 @@ package lt.vu.usecases;
 
 import lombok.Getter;
 import lombok.Setter;
-//import lt.vu.mybatis.dao.RestaurantMapper;
-//import lt.vu.mybatis.dao.TableEntityMapper;
-//import lt.vu.mybatis.model.Restaurant;
-//import lt.vu.mybatis.model.TableEntity;
-import lt.vu.entities.Customer;
 import lt.vu.entities.Restaurant;
 import lt.vu.entities.TableEntity;
 import lt.vu.persistence.RestaurantDAO;
 import lt.vu.persistence.TableEntityDAO;
+import lt.vu.services.interfaces.RestaurantServices;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
@@ -27,6 +23,13 @@ public class Restaurants {
 
     @Inject
     private TableEntityDAO tableEntityDAO;
+
+    @Inject
+    private RestaurantServices restaurantServices;
+
+    @Getter
+    @Setter
+    private List<Double> restaurantPaymentPerYear = new ArrayList<>();
 
     @Getter
     @Setter
@@ -77,6 +80,8 @@ public class Restaurants {
         for(Restaurant res : this.allRestaurants){
             List<TableEntity> tables = res.getTables();
             Integer tablesCount = tables.size();
+            double paymentPerYear = restaurantServices.paymentForInsideTablesPerYear(tablesCount);
+            restaurantPaymentPerYear.add(paymentPerYear);
             restaurantsTableNumbers.add(tablesCount);
         }
 

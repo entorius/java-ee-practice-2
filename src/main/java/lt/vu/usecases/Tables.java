@@ -6,12 +6,15 @@ import lt.vu.entities.Restaurant;
 import lt.vu.entities.TableEntity;
 import lt.vu.persistence.RestaurantDAO;
 import lt.vu.persistence.TableEntityDAO;
+import lt.vu.services.interfaces.TableServices;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +25,13 @@ public class Tables {
 
     @Inject
     private TableEntityDAO tableEntityDAO;
+
+    @Inject
+    private TableServices tableServices;
+
+    @Getter
+    @Setter
+    private List<Double> tablePrices = new ArrayList<Double>();
 
     @Getter
     @Setter
@@ -38,6 +48,10 @@ public class Tables {
                 FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         Integer restaurantId = Integer.parseInt(requestParameters.get("restaurantId"));
         this.restaurant = restaurantDAO.findOne(restaurantId);
+        for(TableEntity t : this.restaurant.getTables()){
+            double tablePrice = tableServices.countTablePrice(t.getCapacity());
+            tablePrices.add(tablePrice);
+        }
     }
 
     @Transactional

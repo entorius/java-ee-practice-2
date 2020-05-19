@@ -2,11 +2,20 @@
 <beans
         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                       http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
         bean-discovery-mode="annotated">
-
+    <context:component-scan base-package="lt.vu"/>
     <interceptors>
         <class>lt.vu.interceptors.MethodLogger</class>
     </interceptors>
+    <alternatives>
+        <!--<class>lt.vu.services.implementations.HolidayTableServices</class>-->
+        <class>lt.vu.services.implementations.VeryStandardRestaurantServices</class>
+    </alternatives>
+    <decorators>
+        <!--<class>lt.vu.services.implementations.HolidayTableServices</class>-->
+        <class>lt.vu.services.implementations.CustomerServicesDecorator</class>
+    </decorators>
 </beans>

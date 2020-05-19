@@ -6,6 +6,8 @@ import lt.vu.entities.Customer;
 import lt.vu.entities.TableEntity;
 import lt.vu.persistence.CustomerDAO;
 import lt.vu.persistence.TableEntityDAO;
+import lt.vu.services.interfaces.CustomerServices;
+import lt.vu.services.interfaces.TableServices;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
@@ -26,9 +28,19 @@ public class Customers {
     @Inject
     private CustomerDAO customerDAO;
 
+    @Inject
+    private CustomerServices customerServices;
+
+    @Inject
+    private TableServices tableServices;
+
     @Getter
     @Setter
     private Integer selectedCustomerId;
+
+    @Getter
+    @Setter
+    private Double customersPaymentAmount;
 
     @Getter
     @Setter
@@ -49,14 +61,23 @@ public class Customers {
     public void init(){
         System.out.println("Customers INIT CALLED");
         loadAllCustomers();
+
         Map<String, String> requestParameters =
                 FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         String requestParam = requestParameters.get("tableEntityId");
         System.out.println(requestParam);
+
         if(this.tableEntity == null) {
             Integer tableEntityId = Integer.parseInt(requestParam);
             this.tableEntity = tableEntityDAO.findOne(tableEntityId);
         }
+
+        List<Double> sums = new ArrayList<>();
+
+        for(Customer c: this.tableEntity.getCustomers()){
+            sums.add(tableServices.countTablePrice(this.tableEntity.getCapacity()));
+        }
+        customersPaymentAmount = customerServices.countPaymentSum(sums);
     }
 
     @Transactional

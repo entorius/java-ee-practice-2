@@ -34,14 +34,21 @@
             <th>Restaurant number</th>
             <th>Restaurant Name</th>
             <th>Restaurant tables number</th>
+            <th>Restaurant payment for year</th>
             <th>Edit tables</th>
             <th>Delete restaurant</th>
         </tr>
         <ui:repeat value="#{restaurants.allRestaurants}" var="restaurant" varStatus="restaurantStatus">
             <tr>
                 <th>#{restaurant.id}</th>
-                <th>#{restaurant.name}</th>
+                <th>
+                    #{restaurant.name}
+                    <h:link outcome="editRestaurantName?restaurantId=#{restaurant.id}">
+                        <input type="submit" value="Edit restaurant name" />
+                    </h:link>
+                </th>
                 <th>#{restaurants.restaurantsTableNumbers[restaurantStatus.index]}</th>
+                <th>#{restaurants.restaurantPaymentPerYear[restaurantStatus.index]}</th>
                 <th>
                     <h:link outcome="tables?restaurantId=#{restaurant.id}">
                         <input type="submit" value="Edit tables" />

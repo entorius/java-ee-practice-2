@@ -32,12 +32,14 @@
         <tr>
             <th>Description</th>
             <th>Capacity</th>
+            <th>Price</th>
             <th>Edit customers</th>
         </tr>
-        <ui:repeat value="#{tables.restaurant.tables}" var="table">
+        <ui:repeat value="#{tables.restaurant.tables}" var="table" varStatus="varStatus">
             <tr>
                 <th>#{table.description}</th>
                 <th>#{table.capacity}</th>
+                <th>#{tables.tablePrices[varStatus.index]}</th>
                 <th>
                     <h:link outcome="customers?tableEntityId=#{table.id}">
                         <input type="submit" value="Edit customers" />

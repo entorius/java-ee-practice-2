@@ -68,6 +68,9 @@
             <f:param name="tableEntityId" value="#{customers.tableEntity.id}" />
         </h:commandButton>
     </h:form>
+    <h:outputText value="&lt;br/&gt;" escape="false" />
+    <h:outputText value="Sum that this table earned: #{customers.customersPaymentAmount}" />
+    <h:outputText value="&lt;br/&gt;" escape="false" />
     <h:link outcome="tables?restaurantId=#{customers.tableEntity.restaurant.id}" value="Back to tables page"/>
 </h:body>
 </html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<style>
+    table, th, tr{
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    tr:first-child{
+        background-color: #00926B;
+        color: aliceblue;
+    }
+    h2, h1{
+        text-align: center;
+    }
+    input[type=submit]{
+        background-color: limegreen;
+        color:white;
+    }
+
+</style>
+
+<h:head/>
+<h:body>
+    <h1> Restaurant #{editRestaurantName.selectedRestaurant.name} </h1>
+    <h:outputText value="&lt;br/&gt;" escape="false" />
+    <h3>Edit restaurant name:</h3>
+    <h:outputText value="&lt;br/&gt;" escape="false" />
+    <h:form>
+
+        <h:inputText a:placeholder="name" value="#{editRestaurantName.selectedRestaurantNameUpdate}" required="true"/>
+        <h:outputText value="&lt;br/&gt;" escape="false" />
+        <h:commandButton value="Save restaurant name" action="#{editRestaurantName.editRestaurantName}">
+            <f:param name="restaurantId" value="#{editRestaurantName.selectedRestaurant.id}" />
+        </h:commandButton>
+
+    </h:form>
+    <h:form>
+        <h:commandButton value="async action" >
+            <f:ajax execute="name" render="output" />
+        </h:commandButton>
+        <h:outputText id="output" value="#{editRestaurantName.getAsyncSayLongHello(editRestaurantName.selectedRestaurant)}" />
+    </h:form>
+
+
+    <h:link outcome="restaurants" value="Back to restaurants page"/>
+</h:body>
+</html>
+
