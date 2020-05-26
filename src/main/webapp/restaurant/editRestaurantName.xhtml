@@ -40,6 +40,12 @@
         </h:commandButton>
 
     </h:form>
+    <h:form>
+    <h:commandButton value="SayHello" action="#{editRestaurantName.sayHello}">
+        <f:param name="restaurantId" value="#{editRestaurantName.selectedRestaurant.id}" />
+    </h:commandButton>
+    </h:form>
+    <h:outputText value="#{editRestaurantName.restaurantManagerMessage}" escape="false" />
 
     <h:link outcome="restaurants" value="Back to restaurants page"/>
 </h:body>

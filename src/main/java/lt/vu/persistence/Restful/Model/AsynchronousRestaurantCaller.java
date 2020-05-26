@@ -12,6 +12,6 @@ public class AsynchronousRestaurantCaller {
     RestaurantAsyncMethods resAsync;
     public void CallHello(Restaurant res){
         System.out.println(resAsync);
-        resAsync.getAsyncSayLongHello(res.getName());
+        resAsync.getAsyncSayLongHello(res);
     }
 }

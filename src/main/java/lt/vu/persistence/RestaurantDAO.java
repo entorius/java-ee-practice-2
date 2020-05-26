@@ -5,12 +5,18 @@ import lt.vu.entities.Restaurant;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceUnit;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
 public class RestaurantDAO {
     @Inject
     private EntityManager em;
+    @PersistenceUnit(unitName = "LocalPlayersPU")
+    private EntityManagerFactory emf;
 
 
     public List<Restaurant> loadAll() {

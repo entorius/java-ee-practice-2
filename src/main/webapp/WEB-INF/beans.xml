@@ -11,7 +11,7 @@
         <class>lt.vu.interceptors.MethodLogger</class>
     </interceptors>
     <alternatives>
-        <!--<class>lt.vu.services.implementations.HolidayTableServices</class>-->
+        <class>lt.vu.services.implementations.HolidayTableServices</class>
         <class>lt.vu.services.implementations.VeryStandardRestaurantServices</class>
     </alternatives>
     <decorators>

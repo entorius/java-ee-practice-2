@@ -30,6 +30,8 @@ public class Restaurant implements Serializable {
     @Size(max = 50)
     @Column(name = "NAME")
     private String name;
+    @Column(name = "CONGRADULATIONSNUMBER")
+    private Integer conNumber;
     @Version
     @Column(name = "VERSION")
     private Integer version;

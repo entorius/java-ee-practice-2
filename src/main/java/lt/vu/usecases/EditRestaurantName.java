@@ -15,6 +15,7 @@ import javax.persistence.OptimisticLockException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
@@ -23,12 +24,20 @@ import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
 public class EditRestaurantName {
     @Inject
     private RestaurantDAO restaurantsDAO;
+    @Inject
+    private RestaurantAsyncMethods resAsync;
     @Getter
     @Setter
     private Restaurant selectedRestaurant;
     @Getter
     @Setter
     private String selectedRestaurantNameUpdate;
+    @Getter
+    @Setter
+    private Boolean completed;
+    @Getter
+    @Setter
+    private String restaurantManagerMessage;
     @Getter
     private List<Restaurant> allRestaurants;
     @Getter
@@ -38,6 +47,8 @@ public class EditRestaurantName {
     public void init(){
         loadAllRestaurants();
         setCurrentRestaurant();
+        restaurantManagerMessage = "Restaurant manger said hello for " + selectedRestaurant.getConNumber() + " Times";
+
     }
     public void setCurrentRestaurant(){
         Map<String, String> requestParameters =
@@ -69,6 +80,11 @@ public class EditRestaurantName {
             return "editRestaurantName?faces-redirect=true&restaurantId=" + restaurantToUpdate.getId() + "&error=interrupted-exception";
         }
         return "editRestaurantName?faces-redirect=true&restaurantId=" + restaurantToUpdate.getId();
+    }
+    @Transactional
+    public String sayHello(){
+        resAsync.getAsyncSayLongHello(selectedRestaurant);
+        return "editRestaurantName?faces-redirect=true&restaurantId=" + selectedRestaurant.getId();
     }
     private void loadAllRestaurants(){
         this.allRestaurants = restaurantsDAO.loadAll();
